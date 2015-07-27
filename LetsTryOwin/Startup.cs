@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Owin;
+﻿using Owin;
 
 namespace LetsTryOwin
 {
@@ -10,6 +6,8 @@ namespace LetsTryOwin
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseWebApi(new WebApiConfig());    //added support for webapi
+
             app.Run(context =>
             {
                 context.Response.ContentType = "application/json";
