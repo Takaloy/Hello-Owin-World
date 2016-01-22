@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using LightInject;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
@@ -8,6 +9,7 @@ namespace LetsTryOwin
     {
         public WebApiConfig()
         {
+            RegisterContainer();
             ConfigureRoutes();
             ConfigureSerializer();
         }
@@ -26,6 +28,14 @@ namespace LetsTryOwin
             var jsonSettings = Formatters.JsonFormatter.SerializerSettings;
             jsonSettings.Formatting = Formatting.Indented;
             jsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
+        private void RegisterContainer()
+        {
+            var container = new ServiceContainer();
+            container.RegisterApiControllers();
+            container.RegisterFrom<CompositionRoot>();
+            container.EnableWebApi(this);
         }
     }
 }
